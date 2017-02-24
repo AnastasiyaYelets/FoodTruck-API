@@ -30,7 +30,7 @@ api.get('/',authenticate, (req,res) => {
   });
 });
 
-api.get('/:id', (req, res) => {
+api.get('/:id', authenticate, (req, res) => {
   FoodTruck.findById(req.params.id, (err, foodtruck) => {
     if (err) {
       res.send(err);
@@ -39,7 +39,7 @@ api.get('/:id', (req, res) => {
   });
 });
 
-api.put('/:id', (req, res) => {
+api.put('/:id', authenticate, (req, res) => {
   FoodTruck.findById(req.params.id, (err, foodtruck) => {
     if (err) {
       res.send(err);
@@ -55,7 +55,7 @@ api.put('/:id', (req, res) => {
   });
 });
 
-  api.delete('/:id', (req, res) => {
+  api.delete('/:id', authenticate, (req, res) => {
     FoodTruck.remove({
       _id: req.params.id
     }, (err, foodtruck) => {
@@ -66,7 +66,7 @@ api.put('/:id', (req, res) => {
     });
    });
 
-   api.post('/reviews/add/:id', (req, res) => {
+   api.post('/reviews/add/:id', authenticate, (req, res) => {
      FoodTruck.findById(req.params.id, (err, foodtruck) => {
        if (err) {
          res.send(err);
@@ -91,7 +91,7 @@ api.put('/:id', (req, res) => {
      });
     });
 
-    api.get('/reviews/:id', (req, res) => {
+    api.get('/reviews/:id', authenticate, (req, res) => {
       Review.find({foodtruck: req.params.id}, (err, reviews) => {
         if (err) {
           res.send(err);
@@ -100,7 +100,7 @@ api.put('/:id', (req, res) => {
       });
     });
 
-    api.get('/foodtype/:foodtype', (req, res) => {
+    api.get('/foodtype/:foodtype', authenticate, (req, res) => {
       FoodTruck.find({foodtype: req.params.foodtype}, (err, foodtrucks) => {
         if (err) {
           res.send(err);
@@ -109,7 +109,7 @@ api.put('/:id', (req, res) => {
       });
     });
 
-    api.get('/avgcost/:avgcost', (req, res) => {
+    api.get('/avgcost/:avgcost', authenticate, (req, res) => {
       FoodTruck.find({avgcost: req.params.avgcost}, (err, foodtrucks) => {
         if (err) {
           res.send(err);
