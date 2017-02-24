@@ -2,10 +2,12 @@ import mongoose from 'mongoose';
 import { Router } from 'express';
 import FoodTruck from '../model/foodtruck';
 import Review from '../model/review';
+
+import { authenticate } from "../middleware/authMiddleware";
 export default({ config, db}) => {
   let api = Router();
 
-  api.post('/add',(req, res ) => {
+  api.post('/add', authenticate, (req, res ) => {
     let newFoodTruck = new FoodTruck();
     newFoodTruck.name = req.body.name;
     newFoodTruck.foodtype = req.body.foodtype;
@@ -19,7 +21,7 @@ export default({ config, db}) => {
       res.json({ message: "FoodTruck saved successfully"});
       });
   });
-api.get('/',(req,res) => {
+api.get('/',authenticate, (req,res) => {
   FoodTruck.find({}, (err, foodtrucks)=>{
     if (err) {
       res.send(err);
